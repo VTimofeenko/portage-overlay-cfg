@@ -1,0 +1,13 @@
+---
+- name: Run common preparation playbook
+  import_playbook: ../resources/prepare.yml
+
+- name: Setup an overlay to be later disabled
+  hosts: all
+  tasks:
+    - name: Enable guru overlay
+      include_role:
+        name: "gentoo-overlay"
+      vars:
+        gentoo_overlay_repos:
+          - name: guru

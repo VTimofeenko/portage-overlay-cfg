@@ -13,7 +13,5 @@ platforms:
       - /tmp/gentoo-molecule/binpkgs:/var/cache/binpkgs
 provisioner:
   name: ansible
-  playbooks:
-    prepare: ../resources/prepare.yml
 verifier:
   name: ansible

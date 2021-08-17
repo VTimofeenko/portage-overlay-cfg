@@ -1,6 +1,6 @@
 ---
 
-- name: Verify repo_enable
+- name: Verify repo_disable
   hosts: all
   gather_facts: false
   tasks:

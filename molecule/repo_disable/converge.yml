@@ -2,12 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Enable guru overlay"
-      include_role:
-        name: "gentoo-overlay"
-      vars:
-        gentoo_overlay_repos:
-          - name: guru
     - name: "Disable guru overlay"
       include_role:
         name: "gentoo-overlay"

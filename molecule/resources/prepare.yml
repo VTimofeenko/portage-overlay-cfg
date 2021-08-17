@@ -1,5 +1,5 @@
 ---
-- name: Enable binpkg-related stuff
+- name: Run preparation playbook
   hosts: Gentoo
   tasks:
     # At the time of writing, eselect-repository needs lxml
