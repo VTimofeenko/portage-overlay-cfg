@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Remove guru overlay"
+      include_role:
+        name: "gentoo-overlay"
+      vars:
+        gentoo_overlay_repos:
+          - name: guru
+            state: absent

@@ -1,0 +1,24 @@
+---
+
+- name: Verify repo_enable
+  hosts: all
+  gather_facts: false
+  tasks:
+    # If repo is removed - the directory should not exist
+    - name: Check that guru directory does not exist
+      file:
+        path: /var/db/repos/guru
+        state: absent
+      register: repo_result
+      check_mode: yes
+      register: assertion
+      failed_when: (assertion is changed) or (assertion is failed)
+
+    - name: Check that guru is disabled
+      lineinfile:
+        name: "/etc/portage/repos.conf/eselect-repo.conf"
+        line: "[guru]"
+        state: absent
+      check_mode: yes
+      register: assertion
+      failed_when: (assertion is changed) or (assertion is failed)
