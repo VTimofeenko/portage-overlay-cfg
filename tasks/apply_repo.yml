@@ -1,0 +1,15 @@
+- name: "Enable {{ repo.name }}"
+  debug:
+    msg: "eselect repository enable {{ repo.name }}"
+  # ansible.builtin.command: "eselect repository enable {{ repo.name }}"
+  when: repo.state is not defined or repo.state == "present"
+- name: "Disable {{ repo.name }}"
+  debug:
+    msg: "eselect repository disable {{ repo.name }}"
+  # ansible.builtin.command: "eselect repository enable {{ repo.name }}"
+  when: repo.state is defined and repo.state == "disabled"
+- name: "Remove {{ repo.name }}"
+  debug:
+    msg: "eselect repository remove {{ repo.name }}"
+  # ansible.builtin.command: "eselect repository enable {{ repo.name }}"
+  when: repo.state is defined and repo.state == "absent"

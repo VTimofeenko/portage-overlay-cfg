@@ -1,0 +1,16 @@
+---
+- name: Sync enabled repositories
+  command: "emaint sync -r {{ item }}"
+  loop: "{{ repos_to_enable }}"
+  listen: 'sync repos'
+
+# Ansible does not allow including roles in handlers.
+# See #20493 in repo on github
+# - name: Mask all packages from enabled repos
+#   include_role:
+#     name: portage-cfg-wip
+#   vars:
+#     portage_mask:
+#       - "*/*::{{ item }}"
+#   loop: "{{ repos_to_enable }}"
+# handlers file for gentoo-overlay role

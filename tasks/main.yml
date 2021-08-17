@@ -1,0 +1,55 @@
+---
+- name: Check the OS family
+  fail:
+    msg: Should be run on Gentoo-family system
+  when: ansible_facts['os_family'] != "Gentoo"
+
+# split into separate block to have a single become
+- block:
+  - name: Check that eselect-repository is installed
+    package:
+      name: app-eselect/eselect-repository
+      state: present
+
+  - name: Build lists of repositories to act on
+    set_fact:
+      repos_to_enable: '{{ gentoo_overlay_repos | json_query(enable_query) or [] }}'
+      repos_to_disable: '{{ gentoo_overlay_repos | json_query(disable_query) or [] }}'
+      repos_to_remove: '{{ gentoo_overlay_repos | json_query(remove_query) or [] }}'
+    vars:
+      enable_query: "[?state=='present' || state==null].name"
+      disable_query: "[?state=='disabled'].name"
+      remove_query: "[?state=='absent'].name"
+
+  - name: Enable repos
+    command: "eselect repository enable {{ repos_to_enable | join(' ') }}"
+    register: _enable_repos_result
+    failed_when: _enable_repos_result.stdout is search('repository not in repositories.xml')
+    changed_when: _enable_repos_result.stdout is search('repositories enabled')
+    notify: "sync repos"
+    when: repos_to_enable|length >0
+
+  - name: Mask all packages from enabled repos
+    include_role:
+      name: someone_stole_my_name.portage_cfg
+    vars:
+      portage_mask:
+        - "*/*::{{ repo }}"
+    loop: "{{ repos_to_enable }}"
+    loop_control:
+      loop_var: repo
+    when: repos_to_enable|length >0
+
+  - name: Disable repos
+    command: "eselect repository disable {{ repos_to_disable | join(' ') }}"
+    register: _disable_repos_result
+    changed_when: _disable_repos_result.stdout is search('repositories disabled')
+    when: repos_to_disable|length >0
+
+  - name: Remove repos
+    command: "eselect repository remove {{ repos_to_remove | join(' ') }}"
+    register: _remove_repos_result
+    changed_when: _remove_repos_result.stdout is search('repositories removed')
+    when: repos_to_remove|length >0
+
+# tasks file for gentoo-overlay

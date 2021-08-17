@@ -1,0 +1,39 @@
+---
+- name: Enable binpkg-related stuff
+  hosts: Gentoo
+  tasks:
+    # At the time of writing, eselect-repository needs lxml
+    # Lxml takes a while to build, this will save time.
+    - name: Enable buildpkg feature
+      lineinfile:
+        line: "FEATURES='buildpkg'"
+        dest: /etc/portage/make.conf
+        state: present
+    - name: Enable trying to install from binpkgs by default
+      lineinfile:
+        line: "EMERGE_DEFAULT_OPTS='--usepkg'"
+        dest: /etc/portage/make.conf
+        state: present
+    - name: Synchronize gentoo repository if needed
+      block:
+        - name: Check if there is anything in the repo
+          find:
+            paths: '/var/db/repos/gentoo/'
+          register: find_files_in_repo
+        - name: Synchronize the repo if needed
+          command: "emaint sync -a"
+          when: find_files_in_repo.matched == 0
+
+    - name: Install equery, needed for package check
+      # Command, because equery does not exist yet
+      command: emerge -1 app-portage/gentoolkit
+    - name: Install dev-vcs/git
+      # Need this for git-based repos
+      # Do not need perl, too many deps
+      command: 'emerge -1 dev-vcs/git'
+      environment:
+        USE: "-perl"
+    - name: Create repos.conf directory for eselect-repository
+      file:
+        path: /etc/portage/repos.conf
+        state: directory

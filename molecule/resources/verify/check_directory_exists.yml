@@ -1,0 +1,11 @@
+- name: Check the guru directory
+  file:
+    path: /var/db/repos/guru
+  register: repo_result
+- name: Debug
+  debug:
+    msg: "{{ repo_result }}"
+- name: Check that directory exists
+  assert:
+    that:
+      - repo_result.state == "directory"

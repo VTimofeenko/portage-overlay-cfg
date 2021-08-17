@@ -1,0 +1,19 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: ../resources/requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: Gentoo
+    image: gentoo/stage3:amd64
+    volumes:
+      - /tmp/gentoo-molecule/gentoo-repo:/var/db/repos/gentoo
+      - /tmp/gentoo-molecule/binpkgs:/var/cache/binpkgs
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: ../resources/prepare.yml
+verifier:
+  name: ansible

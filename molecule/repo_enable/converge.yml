@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include gentoo-overlay"
+      include_role:
+        name: "gentoo-overlay"
+      vars:
+        gentoo_overlay_repos:
+          - name: guru

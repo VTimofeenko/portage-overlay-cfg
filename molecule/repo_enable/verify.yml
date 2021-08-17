@@ -1,0 +1,17 @@
+---
+
+- name: Verify repo_enable
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check that guru directory exists
+      include_tasks: ../resources/verify/check_directory_exists.yml
+
+    - name: Check that guru is enabled
+      lineinfile:
+        name: "/etc/portage/repos.conf/eselect-repo.conf"
+        line: "[guru]"
+        state: present
+      check_mode: yes
+      register: assertion
+      failed_when: (assertion is changed) or (assertion is failed)
