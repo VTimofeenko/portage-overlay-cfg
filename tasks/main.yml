@@ -38,7 +38,9 @@
     loop: "{{ repos_to_enable }}"
     loop_control:
       loop_var: repo
-    when: repos_to_enable|length >0
+    when:
+      - repos_to_enable|length >0
+      - gentoo_overlay_mask_by_default
 
   - name: Disable repos
     command: "eselect repository disable {{ repos_to_disable | join(' ') }}"

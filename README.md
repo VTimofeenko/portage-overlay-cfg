@@ -27,7 +27,7 @@ State transition table:
 | present | disabled | `eselect repository disable <name>` |
 | any | absent | `eselect repository remove <name>` |
 
-* `gentoo_overlay_default_mask`: whether to mask packages from repos that were enabled (add "`*/*::repo.name`" to package.mask). Set to `true` by default.
+* `gentoo_overlay_mask_by_default`: whether to mask packages from repos that were enabled (add "`*/*::repo.name`" to package.mask). Set to `true` by default.
 
 # Example Playbook
 

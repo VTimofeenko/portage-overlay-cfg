@@ -1,6 +1,6 @@
 ---
 
-- name: Verify repo_enable
+- name: Verify test_no_mask
   hosts: all
   gather_facts: false
   tasks:
@@ -15,11 +15,12 @@
       check_mode: yes
       register: assertion
       failed_when: (assertion is changed) or (assertion is failed)
-    - name: Check that guru is masked
+    - name: Check that guru is not masked
       lineinfile:
-        name: /etc/portage/package.mask
-        line: "*/*::guru"
-        state: present
+        name: "/etc/portage/repos.conf/eselect-repo.conf"
+        line: "[guru]"
+        state: absent
       check_mode: yes
       register: assertion
       failed_when: (assertion is changed) or (assertion is failed)
+

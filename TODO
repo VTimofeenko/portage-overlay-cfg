@@ -1,6 +1,3 @@
-
-implement gentoo_overlay_default_mask
-
 fix task name in verify.yml
 
 remove extra tasks file

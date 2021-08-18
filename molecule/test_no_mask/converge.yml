@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include portage-overlay-cfg overlay"
+      include_role:
+        name: "portage-overlay-cfg"
+      vars:
+        gentoo_overlay_repos:
+          - name: guru
+        gentoo_overlay_mask_by_default: false
