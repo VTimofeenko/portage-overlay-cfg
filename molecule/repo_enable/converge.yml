@@ -2,9 +2,9 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include gentoo-overlay"
+    - name: "Include portage-overlay-cfg overlay"
       include_role:
-        name: "gentoo-overlay"
+        name: "portage-overlay-cfg"
       vars:
         gentoo_overlay_repos:
           - name: guru

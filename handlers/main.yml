@@ -13,4 +13,3 @@
 #     portage_mask:
 #       - "*/*::{{ item }}"
 #   loop: "{{ repos_to_enable }}"
-# handlers file for gentoo-overlay role

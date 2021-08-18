@@ -4,7 +4,7 @@
   tasks:
     - name: "Disable guru overlay"
       include_role:
-        name: "gentoo-overlay"
+        name: "portage-overlay-cfg"
       vars:
         gentoo_overlay_repos:
           - name: guru

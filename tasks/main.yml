@@ -51,5 +51,3 @@
     register: _remove_repos_result
     changed_when: _remove_repos_result.stdout is search('repositories removed')
     when: repos_to_remove|length >0
-
-# tasks file for gentoo-overlay
