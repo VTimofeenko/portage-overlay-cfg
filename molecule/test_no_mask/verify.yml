@@ -23,4 +23,3 @@
       check_mode: yes
       register: assertion
       failed_when: (assertion is changed) or (assertion is failed)
-

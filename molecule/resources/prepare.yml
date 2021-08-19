@@ -26,14 +26,17 @@
 
     - name: Install equery, needed for package check
       # Command, because equery does not exist yet
-      command: emerge -1 app-portage/gentoolkit
+      command: emerge --changed-use --oneshot app-portage/gentoolkit
+      changed_when: false
     - name: Install dev-vcs/git
       # Need this for git-based repos
       # Do not need perl, too many deps
-      command: 'emerge -1 dev-vcs/git'
+      command: 'emerge --changed-use --oneshot dev-vcs/git'
+      changed_when: false
       environment:
         USE: "-perl"
     - name: Create repos.conf directory for eselect-repository
       file:
         path: /etc/portage/repos.conf
+        mode: 644
         state: directory

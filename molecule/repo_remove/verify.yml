@@ -9,7 +9,6 @@
       file:
         path: /var/db/repos/guru
         state: absent
-      register: repo_result
       check_mode: yes
       register: assertion
       failed_when: (assertion is changed) or (assertion is failed)

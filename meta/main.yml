@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: portage-overlay-cfg
-  author: VTimofeenko
-  description: Role to manage Gentoo overlays
+  role_name: "portage_overlay_cfg"
+  author: "VTimofeenko"
+  description: Role to manage Gentoo overlays in repos.conf
   license: BSD-3-Clause
   min_ansible_version: 2.8
   platforms:
